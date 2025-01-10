@@ -1,8 +1,10 @@
 package com.russo.veterinaria;
 
 
+import ch.qos.logback.core.rolling.helper.PeriodicityType;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+import com.russo.veterinaria.model.Pet;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,5 +34,12 @@ class VeterinariaApplicationTests {
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 		Number id = documentContext.read("$.id");
 		assertThat(id).isEqualTo(1);
+	}
+
+	@Test
+	void shouldCreateANewPet(){
+		Pet newPet = new Pet(null,"luna","terrier","dog","black and white");
+		ResponseEntity<Void> response = restTemplate.postForEntity("/pets",newPet,Void.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 	}
 }

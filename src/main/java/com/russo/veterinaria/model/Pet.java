@@ -15,11 +15,11 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(Long id, String name, String breed, String race, String color) {
+    public Pet(Long id, String name, String breed, String species, String color) {
         this.id = id;
         this.name = name;
         this.breed = breed;
-        this.species = race;
+        this.species = species;
         this.color = color;
     }
 

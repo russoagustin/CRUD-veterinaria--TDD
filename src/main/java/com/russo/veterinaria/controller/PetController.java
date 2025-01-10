@@ -3,11 +3,10 @@ package com.russo.veterinaria.controller;
 import com.russo.veterinaria.model.Pet;
 import com.russo.veterinaria.repository.PetRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +29,12 @@ public class PetController {
         Optional<Pet> petOptional = repository.findById(id);
         return petOptional.isPresent() ?
                 ResponseEntity.ok(petOptional.get()) : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    ResponseEntity<Void> createAPet(@RequestBody Pet newPet, UriComponentsBuilder ucb){
+        Pet savedPet = repository.save(newPet);
+        URI uri = ucb.path("pets/id").buildAndExpand(savedPet.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
