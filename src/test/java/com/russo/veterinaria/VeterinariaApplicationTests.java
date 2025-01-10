@@ -34,6 +34,9 @@ class VeterinariaApplicationTests {
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 		Number id = documentContext.read("$.id");
 		assertThat(id).isEqualTo(1);
+
+		String name = documentContext.read("$.name");
+		assertThat(name).isEqualTo("Firulais");
 	}
 
 	@Test
