@@ -34,7 +34,7 @@ public class PetController {
     @PostMapping
     ResponseEntity<Void> createAPet(@RequestBody Pet newPet, UriComponentsBuilder ucb){
         Pet savedPet = repository.save(newPet);
-        URI uri = ucb.path("pets/id").buildAndExpand(savedPet.getId()).toUri();
+        URI uri = ucb.path("pets/{id}").buildAndExpand(savedPet.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 }
